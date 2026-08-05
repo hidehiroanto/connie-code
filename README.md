@@ -104,7 +104,7 @@ You agree not to use the Site to:
 We may limit or block access to the Site at any time, without notice, if we believe you are doing any of the above.
 ```
 
-tl;dr: don't send your secrets or anything illegal, their cdn and firewall record your ip, and they store your messages for 90 days which they can read
+tl;dr: don't send your secrets or anything illegal, their cdn and firewall record your ip temporarily to prevent ddos attacks, and they store your messages for 90 days which they can read and send to legal authorities
 
 if you want your data deleted:
 ```
