@@ -22,13 +22,9 @@ class ConnieAgent:
         self.owner_token = None
 
     def ask(self, prompt: str):
-        payload = {
-            "scope": "topics" if not self.session_id else "followup",
-            "prompt": prompt
-        }
+        payload = {"scope": "topics" if not self.session_id else "followup", "prompt": prompt}
         if self.session_id and self.owner_token:
-            payload["sessionId"] = self.session_id
-            payload["ownerToken"] = self.owner_token
+            payload["sessionId"], payload["ownerToken"] = self.session_id, self.owner_token
 
         req = Request(API_URL, json.dumps(payload).encode(), {"Content-Type": "application/json"}, method="POST")
 
@@ -44,9 +40,19 @@ class ConnieAgent:
                         chunk, buffer = buffer.split("\n\n", 1)
                         chunk = chunk.strip()
                         if chunk.startswith("data: "):
-                            raw_json = chunk[6:]
                             try:
-                                self._process_event(json.loads(raw_json))
+                                event = json.loads(chunk[len("data: "):])
+                                event_type = event.get("type")
+
+                                if event_type == "session":
+                                    self.owner_token, self.session_id = event.get("ownerToken"), event.get("sessionId")
+                                elif event_type == "topic":
+                                    pass
+                                elif event_type == "token":
+                                    print(event.get("token", ""), end="", flush=True)
+                                elif event_type == "error":
+                                    print(f"\n[API Error]: {event.get("error", "Unknown error")}")
+
                             except json.JSONDecodeError:
                                 pass
                 print()
@@ -54,21 +60,6 @@ class ConnieAgent:
             print(f"\n[HTTP Error {e.code}]: {e.reason}")
         except URLError as e:
             print(f"\n[Connection Error]: {e.reason}")
-
-    def _process_event(self, event: dict):
-        event_type = event.get("type")
-
-        if event_type == "session":
-            self.session_id = event.get("sessionId")
-            self.owner_token = event.get("ownerToken")
-        elif event_type == "topic":
-            pass
-        elif event_type == "token":
-            token = event.get("token", "")
-            print(token, end="", flush=True)
-        elif event_type == "error":
-            error_msg = event.get("error", "Unknown error")
-            print(f"\n[API Error]: {error_msg}")
 
 def main():
     agent = ConnieAgent()
