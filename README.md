@@ -11,6 +11,16 @@
 ==============================================================================================
 ```
 
+## update
+
+on 2026-08-07 at around 4 pm pdt, the scott wiener for congress campaign [chose](https://sfstandard.com/2026/08/07/scott-wiener-takes-connie-chan-ai-chatbot-pushback-pelosi) to "[take](https://www.sfchronicle.com/politics/article/pelosi-wiener-ai-chatbot-connie-chan-22378352.php) [down](https://missionlocal.org/2026/08/sf-scott-wiener-connie-chan-ai-chatbot)" their conniechan.ai website.
+
+it is currently  "undergoing maintenance" and they claim that they'll "be back soon"
+
+but in the meantime, the api is still up so you can still use this agent. their privacy policy and tos are down though, so plausible deniability.
+
+## intro
+
 like [claude code](https://github.com/anthropics/claude-code), but using the [conniechan.ai](https://conniechan.ai) chat api. free inference paid for by [scott wiener for congress](https://scottwiener.com).
 
 > "If you bombard it with prompts you'll waste their campaign $$$ on stupid ai tokens"
